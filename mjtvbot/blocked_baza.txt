@@ -1,0 +1,2 @@
+<Record id=23 full_name='Avazbek' username='Avazbek_Rasulov' telegram_id=387802783 reg_time=datetime.datetime(2023, 9, 28, 14, 40, 58, 867281) phone='+998905008033' status=None subscription_date=None>
+

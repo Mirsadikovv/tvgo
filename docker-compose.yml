@@ -1,0 +1,59 @@
+services:
+  bot_db:
+    image: postgres:16-alpine3.18
+    environment:
+      POSTGRES_DB: tvgo_db
+      POSTGRES_USER: mirodil
+      POSTGRES_PASSWORD: 1212
+    volumes:
+      - postgres_tvgo:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432" # Мапируем порт 5432 контейнера на 5434 хоста
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mirodil -d tvgo_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  python_bot:
+    build:
+      context: ./mjtvbot
+    ports:
+      - "8082:8082"
+    depends_on:
+      - bot_db
+    environment:
+      DATABASE_URL: postgres://mirodil:1212@bot_db:5432/tvgo_db?sslmode=disable # Обновлено на 5432
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - default
+
+  go_tvgo:
+    build:
+      context: ./tvgo
+    ports:
+      - "8083:8083"
+    depends_on:
+      - bot_db
+    environment:
+      DATABASE_URL: postgres://mirodil:1212@bot_db:5432/tvgo_db?sslmode=disable # Обновлено на 5432
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - default
+
+volumes:
+  postgres_tvgo:
+
+networks:
+  default:
