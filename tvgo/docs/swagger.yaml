@@ -1,0 +1,556 @@
+basePath: /api/v1
+definitions:
+  CreatePlaylistDto:
+    properties:
+      channelLink:
+        type: string
+      description:
+        type: string
+      logoLink:
+        type: string
+      name:
+        type: string
+    type: object
+  CreateUserDto:
+    properties:
+      fullName:
+        type: string
+      phone:
+        type: string
+      regTime:
+        type: string
+      status:
+        type: string
+      subscriptionDate:
+        type: string
+      telegramId:
+        type: integer
+      username:
+        type: string
+    type: object
+  ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  ID:
+    properties:
+      id:
+        type: integer
+    type: object
+  UpdatePlaylistDto:
+    properties:
+      channelLink:
+        type: string
+      description:
+        type: string
+      isVisible:
+        type: boolean
+      logoLink:
+        type: string
+      name:
+        type: string
+    type: object
+  UpdateUserDto:
+    properties:
+      fullName:
+        type: string
+      isVisible:
+        type: boolean
+      phone:
+        type: string
+      status:
+        type: string
+      subscriptionDate:
+        type: string
+      telegramId:
+        type: integer
+      username:
+        type: string
+    type: object
+  model.PlaylistModel:
+    properties:
+      channelLink:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      isVisible:
+        type: boolean
+      logoLink:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  model.UserModel:
+    properties:
+      createdAt:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: integer
+      isVisible:
+        type: boolean
+      phone:
+        type: string
+      regTime:
+        type: string
+      status:
+        type: string
+      subscriptionDate:
+        type: string
+      telegramId:
+        type: integer
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a Tournament service API.
+  title: Tournament service API
+  version: "1.0"
+paths:
+  /playlist:
+    post:
+      consumes:
+      - application/json
+      description: Create playlist
+      operationId: create-playlist
+      parameters:
+      - description: playlist information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/CreatePlaylistDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new playlist
+      tags:
+      - playlist
+  /playlist/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete playlist by ID
+      operationId: delete-playlist
+      parameters:
+      - description: playlist ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Delete playlist
+      tags:
+      - playlist
+    get:
+      consumes:
+      - application/json
+      description: GetContent playlist by ID
+      operationId: get-playlist-by-id
+      parameters:
+      - description: playlist ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/model.PlaylistModel'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent playlist by ID
+      tags:
+      - playlist
+    patch:
+      consumes:
+      - application/json
+      description: Update playlist information by ID
+      operationId: update-playlist
+      parameters:
+      - description: playlist ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: playlist information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/UpdatePlaylistDto'
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update playlist information
+      tags:
+      - playlist
+    put:
+      consumes:
+      - application/json
+      description: put playlist by ID
+      operationId: change-visibility-playlist
+      parameters:
+      - description: playlist ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: put playlist
+      tags:
+      - playlist
+  /playlist/page:
+    get:
+      consumes:
+      - application/json
+      description: GetContent all playlist with pagination
+      operationId: get-all-playlist
+      parameters:
+      - default: "1"
+        description: Page number
+        in: query
+        name: page
+        type: string
+      - default: "10"
+        description: Number of items per page
+        in: query
+        name: perpage
+        type: string
+      - description: Searching by name or description
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent all playlist with pagination
+      tags:
+      - playlist
+  /playlist/search:
+    get:
+      consumes:
+      - application/json
+      description: GetContent all playlist with pagination
+      operationId: search-all-playlist
+      parameters:
+      - description: Searching by name or description
+        in: query
+        name: search
+        type: string
+      - default: 20
+        description: Limit the number of results
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent all playlist with pagination
+      tags:
+      - playlist
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      operationId: create-user
+      parameters:
+      - description: user information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/CreateUserDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new user
+      tags:
+      - user
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user by ID
+      operationId: delete-user
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Delete user
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: GetContent user by ID
+      operationId: get-user-by-id
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/model.UserModel'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent user by ID
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      description: Update user information by ID
+      operationId: update-user
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: user information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateUserDto'
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update user information
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: put user by ID
+      operationId: change-visibility-user
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: put user
+      tags:
+      - user
+  /user/page:
+    get:
+      consumes:
+      - application/json
+      description: GetContent all user with pagination
+      operationId: get-all-user
+      parameters:
+      - default: "1"
+        description: Page number
+        in: query
+        name: page
+        type: string
+      - default: "10"
+        description: Number of items per page
+        in: query
+        name: perpage
+        type: string
+      - description: Searching by name or description
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent all user with pagination
+      tags:
+      - user
+  /user/search:
+    get:
+      consumes:
+      - application/json
+      description: GetContent all user with pagination
+      operationId: search-all-user
+      parameters:
+      - description: Searching by name or description
+        in: query
+        name: search
+        type: string
+      - default: 20
+        description: Limit the number of results
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GetContent all user with pagination
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

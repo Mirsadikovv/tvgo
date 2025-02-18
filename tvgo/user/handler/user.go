@@ -6,11 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mirsadikovv/tvgo/user/dto"
 	_ "github.com/Mirsadikovv/tvgo/user/model"
+	_ "github.com/Mirsadikovv/tvgo/utils"
+	_ "github.com/fobus1289/ufa_shared/http/response"
+
+	"github.com/Mirsadikovv/tvgo/user/dto"
 	"github.com/Mirsadikovv/tvgo/user/service"
 	"github.com/fobus1289/ufa_shared/http"
-	_ "github.com/fobus1289/ufa_shared/http/response"
 	"github.com/fobus1289/ufa_shared/http/validator"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -45,9 +47,9 @@ func NewHandler(router *echo.Group, service service.UserService) {
 // @Accept       json
 // @Produce      json
 // @Param        input body dto.CreateUserDto true "user information"
-// @Success      201 {object} response.ID "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Success      201 {object} utils.ID "Successful operation"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user [post]
 func (e *userHandler) Create(c echo.Context) error {
 	var createDto dto.CreateUserDto
@@ -81,9 +83,9 @@ func (e *userHandler) Create(c echo.Context) error {
 // @Param        page query string false "Page number" default(1)
 // @Param        perpage query string false "Number of items per page" default(10)
 // @Param        search query string false "Searching by name or description"
-// @Success      200 {object} response.ID "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Success      200 {object} utils.ID "Successful operation"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/page [get]
 func (e *userHandler) Page(c echo.Context) error {
 	var (
@@ -126,9 +128,9 @@ func (e *userHandler) Page(c echo.Context) error {
 // @Produce      json
 // @Param        search query string false "Searching by name or description"
 // @Param        limit  query int    false "Limit the number of results" default(20)
-// @Success      200 {object} response.ID "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Success      200 {object} utils.ID "Successful operation"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/search [get]
 func (e *userHandler) Search(c echo.Context) error {
 	const defaultLimit = 15
@@ -175,8 +177,8 @@ func (e *userHandler) Search(c echo.Context) error {
 // @Produce      json
 // @Param        id path string true "user ID"
 // @Success      200 {object} model.UserModel "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/{id} [get]
 func (e *userHandler) GetById(c echo.Context) error {
 
@@ -213,8 +215,8 @@ func (e *userHandler) GetById(c echo.Context) error {
 // @Param        id path string true "user ID"
 // @Param        input body dto.UpdateUserDto true "user information"
 // @Success      204 "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/{id} [patch]
 func (e *userHandler) Update(c echo.Context) error {
 	var id int64
@@ -254,8 +256,8 @@ func (e *userHandler) Update(c echo.Context) error {
 // @Accept       json
 // @Param        id path string true "user ID"
 // @Success      204 "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/{id} [delete]
 func (e *userHandler) Delete(c echo.Context) error {
 	var id int64
@@ -287,8 +289,8 @@ func (e *userHandler) Delete(c echo.Context) error {
 // @Accept       json
 // @Param        id path string true "user ID"
 // @Success      204 "Successful operation"
-// @Failure      400 {object} response.ErrorResponse "Bad request"
-// @Failure      500 {object} response.ErrorResponse "Internal server error"
+// @Failure      400 {object} utils.ErrorResponse "Bad request"
+// @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /user/{id} [put]
 func (e *userHandler) ChangeVisibility(c echo.Context) error {
 	var id int64

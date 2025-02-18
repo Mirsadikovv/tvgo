@@ -4,6 +4,9 @@ import (
 	"log"
 	"strconv"
 
+	_ "github.com/Mirsadikovv/tvgo/docs"
+	echoSwagger "github.com/swaggo/echo-swagger"
+
 	userHandler "github.com/Mirsadikovv/tvgo/user/handler"
 	userModel "github.com/Mirsadikovv/tvgo/user/model"
 	userService "github.com/Mirsadikovv/tvgo/user/service"
@@ -50,6 +53,7 @@ func Exec() {
 		createHandler(router, db)
 		runHTTPServerOnAddr(router, projectEnv.HttpPort)
 	}
+
 }
 
 func runHTTPServerOnAddr(handler *echo.Echo, port int) {
@@ -69,11 +73,9 @@ func setMiddlewares(router *echo.Echo) {
 func createHandler(router *echo.Echo, db *gorm.DB) {
 	group := router.Group("/api/v1")
 	{
-		userHandler.NewHandler(group, userService.NewService(db))
-		playlistHandler.
-			NewHandler(group,
-				playlistService.
-					NewService(db))
+		group.GET("/swagger/*", echoSwagger.WrapHandler)
 
+		userHandler.NewHandler(group, userService.NewService(db))
+		playlistHandler.NewHandler(group, playlistService.NewService(db))
 	}
 }
