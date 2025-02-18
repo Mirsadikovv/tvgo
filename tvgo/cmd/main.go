@@ -10,7 +10,9 @@ import (
 	"gorm.io/gorm"
 
 	playlistHandler "github.com/Mirsadikovv/tvgo/playlist/handler"
+	playlistModel "github.com/Mirsadikovv/tvgo/playlist/model"
 	playlistService "github.com/Mirsadikovv/tvgo/playlist/service"
+
 	loader "github.com/fobus1289/ufa_shared/config"
 	"github.com/fobus1289/ufa_shared/pg"
 	"github.com/labstack/echo/v4"
@@ -38,6 +40,7 @@ func Exec() {
 
 		db.AutoMigrate(
 			userModel.UserModel{},
+			playlistModel.PlaylistModel{},
 		)
 	}
 
