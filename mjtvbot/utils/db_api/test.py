@@ -3,12 +3,7 @@ import nest_asyncio
 from postgresql import Database
 # from utils.db_api.postgresql import Database
 
-
 nest_asyncio.apply() 
-
-
-
-
 
 async def test():
     db = Database()

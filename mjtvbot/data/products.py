@@ -29,9 +29,6 @@ ds_vip = Product(
 )
 
 
-
-
-
 ds_sport = Product(
     title="Sport",
     description="Оплатите чтобы купить подписку Sport",
