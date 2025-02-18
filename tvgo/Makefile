@@ -4,6 +4,8 @@ go_run:
 swag_init:
 	swag init -pd --ot json -g main.go
 
+swag_gen:
+	swag init -g main.go -o docs
 DOCKER_VAR = docker compose -f docker-compose.dev.yml --env-file .env.dev
 
 docker_up:
