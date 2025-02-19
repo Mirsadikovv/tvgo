@@ -1,1 +1,1 @@
-CREATE DATABASE tvgo_db;
+-- CREATE DATABASE tvgo_db;

@@ -102,3 +102,4 @@ go.work
 .env
 .idea
 
+.sql

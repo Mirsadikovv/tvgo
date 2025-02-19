@@ -2,9 +2,9 @@ package main
 
 import "github.com/Mirsadikovv/tvgo/cmd"
 
-// @title Tournament service API
+// @title TVGO API Server
 // @version 1.0
-// @description This is a Tournament service API.
+// @description This is a TVGO API server.
 // @BasePath /api/v1
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
