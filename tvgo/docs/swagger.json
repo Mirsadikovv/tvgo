@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a Tournament service API.",
-        "title": "Tournament service API",
+        "description": "This is a TVGO API server.",
+        "title": "TVGO API Server",
         "contact": {},
         "version": "1.0"
     },
