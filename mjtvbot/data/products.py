@@ -14,7 +14,7 @@ ds_vip = Product(
             amount=2200000, 
         ),
         LabeledPrice(
-            label='Скидка о админа',
+            label='Скидка от админа',
             amount=-500000, 
         ),
     ],

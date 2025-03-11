@@ -8,7 +8,7 @@ from loader import dp
 
 @dp.message_handler(text='VIP')
 async def send_link(message: Message):
-    photo = "AgACAgIAAxkBAAIZAAFnAAEhD-4LIso4_l34BnwbfkWs5ZYAAinjMRvkngABSHZ08di-3AJYAQADAgADeQADNgQ"
+    photo = "AgACAgIAAxkBAAIb7WfQHmY9ZVOWpGT6RUtPcTkzE1oFAAIy9TEbDvCASv0tVREEZVi-AQADAgADbQADNgQ"
     caption =  "В тариф VIP входит\n\n"
     
     caption += "Цена: <b>22 000 сум</b>\n"
@@ -19,7 +19,7 @@ async def send_link(message: Message):
 
 @dp.message_handler(text='Sport')
 async def send_link(message: Message):
-    photo = "AgACAgIAAxkBAAIZAAFnAAEhD-4LIso4_l34BnwbfkWs5ZYAAinjMRvkngABSHZ08di-3AJYAQADAgADeQADNgQ"
+    photo = "AgACAgIAAxkBAAIb72fQHqG369CJrjpaw5PQjPro_-CZAAIz9TEbDvCASqw4zIQwtcq3AQADAgADbQADNgQ"
     caption =  "В тариф Sport входит\n\n"
     
     caption += "Цена: <b>16 000 сум</b>\n"
