@@ -1,0 +1,39 @@
+name: tvgo-app
+services:
+  - name: python-bot
+    github:
+      repo: Mirsadikovv/tvgo
+      branch: main
+      deploy_on_push: true
+    source_dir: ./mjtvbot
+    environment_slug: python
+    build_command: pip install -r requirements.txt
+    run_command: python app.py  
+    http_port: 8082
+    environment:
+      DATABASE_URL: "postgres://mirodil:1212@bot-db:5432/tvgo_db?sslmode=disable"  
+    health_check:
+      http_path: /health
+      initial_delay_seconds: 30
+      period_seconds: 30
+      timeout_seconds: 20
+      failure_threshold: 3
+
+  - name: go-tvgo
+    github:
+      repo: Mirsadikovv/tvgo
+      branch: main
+      deploy_on_push: true
+    source_dir: ./tvgo
+    environment_slug: go
+    build_command: go build -o main
+    run_command: ./main
+    http_port: 8083
+    environment:
+      DATABASE_URL: "postgres://mirodil:1212@bot-db:5432/tvgo_db?sslmode=disable"  
+    health_check:
+      http_path: /health
+      initial_delay_seconds: 30
+      period_seconds: 30
+      timeout_seconds: 10
+      failure_threshold: 3
