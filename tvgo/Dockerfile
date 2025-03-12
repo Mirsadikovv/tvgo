@@ -8,6 +8,8 @@ RUN go mod download
 
 COPY . .
 
+RUN make swag_gen
+
 RUN go build -o tvgo ./main.go
 
 RUN chmod +x start.sh
