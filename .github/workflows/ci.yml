@@ -1,15 +1,14 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
   pull_request:
-    branches: [ dev ]
+    branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       # Checkout кода
       - name: Checkout code
@@ -19,25 +18,52 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Сборка и запуск с помощью docker-compose
+      # Установка docker-compose
+      - name: Install docker-compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      # Сборка и запуск сервисов
       - name: Build and start services
         run: |
           docker-compose up -d --build
 
-      # Ожидание и проверка health checks
+      # Проверка сервисов
       - name: Test services
         run: |
-          # Ожидание готовности базы данных
           until docker-compose exec -T bot_db pg_isready -U mirodil -d tvgo_db; do
             echo "Waiting for database..."
             sleep 5
           done
-          # Проверка health endpoint для python_bot
           docker-compose exec -T python_bot curl -f http://localhost:8082/health || exit 1
-          # Проверка health endpoint для go_tvgo
           docker-compose exec -T go_tvgo curl -f http://localhost:8083/health || exit 1
 
       # Остановка сервисов
       - name: Stop services
         run: |
           docker-compose down
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy to server
+        env:
+          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          echo "$DEPLOY_KEY" > deploy_key
+          chmod 600 deploy_key
+          scp -i deploy_key docker-compose.yml ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_SERVER }}:/home/${{ env.DEPLOY_USER }}/docker-compose.yml
+          ssh -i deploy_key ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_SERVER }} << 'EOF'
+            docker-compose pull
+            docker-compose up -d --build
+            docker system prune -f
+          EOF
+          rm deploy_key
