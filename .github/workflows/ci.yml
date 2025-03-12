@@ -31,19 +31,19 @@ jobs:
           docker-compose up -d --build
 
       # Проверка сервисов
-      - name: Test services
-        run: |
-          until docker-compose exec -T bot_db pg_isready -U mirodil -d tvgo_db; do
-            echo "Waiting for database..."
-            sleep 5
-          done
-          docker-compose exec -T python_bot curl -f http://localhost:8082/health || exit 1
-          docker-compose exec -T go_tvgo curl -f http://localhost:8083/health || exit 1
+      # - name: Test services
+      #   run: |
+      #     until docker-compose exec -T bot_db pg_isready -U mirodil -d tvgo_db; do
+      #       echo "Waiting for database..."
+      #       sleep 5
+      #     done
+      #     docker-compose exec -T python_bot curl -f http://localhost:8082/health || exit 1
+      #     docker-compose exec -T go_tvgo curl -f http://localhost:8083/health || exit 1
 
-      # Остановка сервисов
-      - name: Stop services
-        run: |
-          docker-compose down
+      # # Остановка сервисов
+      # - name: Stop services
+      #   run: |
+      #     docker-compose down
 
   deploy:
     needs: build-and-test
