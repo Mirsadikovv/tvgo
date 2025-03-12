@@ -104,3 +104,5 @@ go.work
 
 .sql
 blocked_baza.txt
+
+app.yml
