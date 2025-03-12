@@ -45,27 +45,27 @@ jobs:
       #   run: |
       #     docker-compose down
 
-deploy:
-  needs: build-and-test
-  runs-on: ubuntu-latest
-  if: github.ref == 'refs/heads/main'
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Deploy to server
-      run: |
-        # Временные значения прямо в коде
-        DEPLOY_SERVER="192.168.1.100"  # Замените на ваш IP
-        DEPLOY_USER="deploy"           # Замените на вашего пользователя
-        DEPLOY_KEY="-----BEGIN OPENSSH PRIVATE KEY-----b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACCd4P6LbS2Ej6DspPIO77Rn57Qok8f/dN1o8g+QGJgS3gAAAKBqxmK/asZivwAAAAtzc2gtZWQyNTUxOQAAACCd4P6LbS2Ej6DspPIO77Rn57Qok8f/dN1o8g+QGJgS3gAAAEDwsFB1SOAO4G0XRDDkUrrIfY1Qv+dbYoPwShaUmSsUOZ3g/ottLYSPoOyk8g7vtGfntCiTx/903WjyD5AYmBLeAAAAHW1pcnNhZGlrb3ZtaXJvZGlsNTJAZ21haWwuY29t-----END OPENSSH PRIVATE KEY-----"
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy to server
+        env:
+          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          DEPLOY_SERVER="68.183.12.104"  # Замените на ваш IP
+          DEPLOY_USER="root"           # Замените на вашего пользователя
+          DEPLOY_PASSWORD="5610056Mm" # Замените на ваш пароль
 
-        echo "$DEPLOY_KEY" > deploy_key
-        chmod 600 deploy_key
-        scp -i deploy_key docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/home/${DEPLOY_USER}/docker-compose.yml
-        ssh -i deploy_key ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
-          docker-compose pull
-          docker-compose up -d --build
-          docker system prune -f
-        EOF
-        rm deploy_key
+          sshpass -p "$DEPLOY_PASSWORD" scp docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/home/${DEPLOY_USER}/docker-compose.yml
+          sshpass -p "$DEPLOY_PASSWORD" ssh ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
+            docker-compose pull
+            docker-compose up -d --build
+            docker system prune -f
+          EOF
 
