@@ -46,26 +46,27 @@ jobs:
       #     docker-compose down
 
   deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Deploy to server
-        env:
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-        run: |
-          DEPLOY_SERVER="68.183.12.104"  # Замените на ваш IP
-          DEPLOY_USER="root"           # Замените на вашего пользователя
-          DEPLOY_PASSWORD="5610056Mm" # Замените на ваш пароль
+      needs: build-and-test
+      runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/main'
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Install sshpass
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y sshpass
+        - name: Deploy to server
+          run: |
+            DEPLOY_SERVER="68.183.12.104"
+            DEPLOY_USER="root"
+            DEPLOY_PASSWORD="5610056Mm"
 
-          sshpass -p "$DEPLOY_PASSWORD" scp docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/home/${DEPLOY_USER}/docker-compose.yml
-          sshpass -p "$DEPLOY_PASSWORD" ssh ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
-            docker-compose pull
-            docker-compose up -d --build
-            docker system prune -f
-          EOF
+            echo "Deploying to $DEPLOY_USER@$DEPLOY_SERVER"
+            sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/home/${DEPLOY_USER}/docker-compose.yml
+            sshpass -p "$DEPLOY_PASSWORD" ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
+              docker-compose pull
+              docker-compose up -d --build
+              docker system prune -f
+            EOF
 
