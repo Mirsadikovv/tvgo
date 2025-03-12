@@ -58,7 +58,7 @@ jobs:
           sudo apt-get install -y sshpass
       - name: Deploy to server
         run: |
-          DEPLOY_SERVER="68.183.12.104"
+          DEPLOY_SERVER="64.227.72.36"
           DEPLOY_USER="root"
           DEPLOY_PASSWORD="5610056Mm"
 
