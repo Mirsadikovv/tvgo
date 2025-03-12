@@ -46,28 +46,28 @@ jobs:
       #     docker-compose down
 
   deploy:
-      needs: build-and-test
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/dev'
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        - name: Install sshpass
-          run: |
-            sudo apt-get update
-            sudo apt-get install -y sshpass
-        - name: Deploy to server
-          run: |
-            DEPLOY_SERVER="68.183.12.104"
-            DEPLOY_USER="root"
-            DEPLOY_PASSWORD="5610056Mm"
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+      - name: Deploy to server
+        run: |
+          DEPLOY_SERVER="68.183.12.104"
+          DEPLOY_USER="root"
+          DEPLOY_PASSWORD="5610056Mm"
 
-            echo "Deploying to $DEPLOY_USER@$DEPLOY_SERVER"
-            sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/${DEPLOY_USER}/tvgo/docker-compose.yml
-            sshpass -p "$DEPLOY_PASSWORD" ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
-              git pull origin dev
-              docker-compose pull
-              docker-compose up -d --build
-              docker system prune -f
-            EOF
-
+          echo "Deploying to $DEPLOY_USER@$DEPLOY_SERVER"
+          sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/${DEPLOY_USER}/tvgo/docker-compose.yml
+          sshpass -p "$DEPLOY_PASSWORD" ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
+            cd /root/tvgo
+            docker-compose down --rmi all  # Останавливает и удаляет контейнеры и образы
+            git pull origin dev            # Обновляет код (если нужен)
+            docker-compose up -d --build   # Запускает с нуля, пересобирая образы
+            docker system prune -f         # Удаляет неиспользуемые данные
+          EOF
