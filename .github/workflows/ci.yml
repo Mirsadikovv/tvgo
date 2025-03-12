@@ -63,7 +63,7 @@ jobs:
             DEPLOY_PASSWORD="5610056Mm"
 
             echo "Deploying to $DEPLOY_USER@$DEPLOY_SERVER"
-            sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/home/${DEPLOY_USER}/root/docker-compose.yml
+            sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/${DEPLOY_USER}/docker-compose.yml
             sshpass -p "$DEPLOY_PASSWORD" ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
               docker-compose pull
               docker-compose up -d --build
