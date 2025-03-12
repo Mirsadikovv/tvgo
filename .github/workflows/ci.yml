@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev ]
 
 jobs:
   build-and-test:
@@ -67,4 +67,3 @@ jobs:
             docker system prune -f
           EOF
           rm deploy_key
-          
