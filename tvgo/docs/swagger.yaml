@@ -1,9 +1,21 @@
 basePath: /api/v1
 definitions:
+  ChannelType:
+    enum:
+    - VIP
+    - SPORT
+    - FREE
+    type: string
+    x-enum-varnames:
+    - VIP
+    - SPORT
+    - FREE
   CreatePlaylistDto:
     properties:
       channelLink:
         type: string
+      channelType:
+        $ref: '#/definitions/ChannelType'
       description:
         type: string
       logoLink:
@@ -42,6 +54,8 @@ definitions:
     properties:
       channelLink:
         type: string
+      channelType:
+        $ref: '#/definitions/ChannelType'
       description:
         type: string
       isVisible:
@@ -83,6 +97,8 @@ definitions:
       logoLink:
         type: string
       name:
+        type: string
+      type:
         type: string
       updatedAt:
         type: string
@@ -306,10 +322,23 @@ paths:
       description: GetContent all playlist with pagination
       operationId: search-all-playlist
       parameters:
-      - description: Searching by name or description
-        in: query
-        name: search
+      - in: query
+        name: isVisible
+        type: boolean
+      - in: query
+        name: name
         type: string
+      - enum:
+        - VIP
+        - SPORT
+        - FREE
+        in: query
+        name: type
+        type: string
+        x-enum-varnames:
+        - VIP
+        - SPORT
+        - FREE
       - default: 20
         description: Limit the number of results
         in: query

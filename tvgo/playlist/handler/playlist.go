@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"strings"
 
 	_ "github.com/Mirsadikovv/tvgo/playlist/model"
 	_ "github.com/Mirsadikovv/tvgo/utils"
@@ -126,20 +125,27 @@ func (e *playlistHandler) Page(c echo.Context) error {
 // @ID           search-all-playlist
 // @Accept       json
 // @Produce      json
-// @Param        search query string false "Searching by name or description"
+// @Param        playlist_query_params query dto.PlaylistQueryParams false "Searching by params"
 // @Param        limit  query int    false "Limit the number of results" default(20)
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /playlist/search [get]
 func (e *playlistHandler) Search(c echo.Context) error {
-	const defaultLimit = 15
-	const maxLimit = 100
+	const (
+		defaultLimit = 15
+		maxLimit     = 100
+	)
 
-	search := strings.TrimSpace(c.QueryParam("search"))
-	ctx := c.Request().Context()
+	var (
+		ctx        = c.Request().Context()
+		limitParam = c.QueryParam("limit")
+		params     dto.PlaylistQueryParams
+	)
+	if err := c.Bind(&params); err != nil {
+		return http.HTTPError(err).BadRequest()
+	}
 
-	limitParam := c.QueryParam("limit")
 	limit, err := strconv.Atoi(limitParam)
 	{
 		if err != nil || limit <= 0 {
@@ -151,12 +157,19 @@ func (e *playlistHandler) Search(c echo.Context) error {
 	}
 
 	filter := func(tx *gorm.DB) *gorm.DB {
-		tx = tx.Where("is_visible = ?", true)
 
-		if search != "" {
-			searchTerm := fmt.Sprintf("%%%s%%", search)
-			tx = tx.Where("name ILIKE ?", searchTerm)
+		if params.Name != nil {
+			tx = tx.Where("playlists.name ILIKE ?", fmt.Sprintf("%%%s%%", *params.Name))
 		}
+
+		if params.IsVisible != nil {
+			tx = tx.Where("playlists.is_visible = ?", *params.IsVisible)
+		}
+
+		if params.Type != nil {
+			tx = tx.Where("playlists.type = ?", *params.Type)
+		}
+
 		return tx.Limit(limit)
 	}
 

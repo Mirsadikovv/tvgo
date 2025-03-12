@@ -136,9 +136,28 @@ const docTemplate = `{
                 "operationId": "search-all-playlist",
                 "parameters": [
                     {
+                        "type": "boolean",
+                        "name": "isVisible",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "Searching by name or description",
-                        "name": "search",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "VIP",
+                            "SPORT",
+                            "FREE"
+                        ],
+                        "type": "string",
+                        "x-enum-varnames": [
+                            "VIP",
+                            "SPORT",
+                            "FREE"
+                        ],
+                        "name": "type",
                         "in": "query"
                     },
                     {
@@ -659,11 +678,27 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "ChannelType": {
+            "type": "string",
+            "enum": [
+                "VIP",
+                "SPORT",
+                "FREE"
+            ],
+            "x-enum-varnames": [
+                "VIP",
+                "SPORT",
+                "FREE"
+            ]
+        },
         "CreatePlaylistDto": {
             "type": "object",
             "properties": {
                 "channelLink": {
                     "type": "string"
+                },
+                "channelType": {
+                    "$ref": "#/definitions/ChannelType"
                 },
                 "description": {
                     "type": "string"
@@ -723,6 +758,9 @@ const docTemplate = `{
             "properties": {
                 "channelLink": {
                     "type": "string"
+                },
+                "channelType": {
+                    "$ref": "#/definitions/ChannelType"
                 },
                 "description": {
                     "type": "string"
@@ -786,6 +824,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 },
                 "updatedAt": {

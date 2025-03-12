@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"math"
+	"strings"
 
 	"github.com/Mirsadikovv/tvgo/playlist/dto"
 	"github.com/Mirsadikovv/tvgo/playlist/model"
@@ -104,6 +105,7 @@ func (s *playlistService) Create(playlistDto *dto.CreatePlaylistDto) (*response.
 		Description: playlistDto.Description,
 		LogoLink:    playlistDto.LogoLink,
 		ChannelLink: playlistDto.ChannelLink,
+		Type:        strings.ToUpper(string(playlistDto.Type)),
 	}
 
 	if err := s.db.Create(&playlist).Error; err != nil {
