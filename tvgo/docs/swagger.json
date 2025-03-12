@@ -690,9 +690,6 @@
                 "channelLink": {
                     "type": "string"
                 },
-                "channelType": {
-                    "$ref": "#/definitions/ChannelType"
-                },
                 "description": {
                     "type": "string"
                 },
@@ -701,6 +698,9 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChannelType"
                 }
             }
         },
@@ -752,9 +752,6 @@
                 "channelLink": {
                     "type": "string"
                 },
-                "channelType": {
-                    "$ref": "#/definitions/ChannelType"
-                },
                 "description": {
                     "type": "string"
                 },
@@ -766,6 +763,9 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChannelType"
                 }
             }
         },

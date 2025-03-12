@@ -20,7 +20,7 @@ type CreatePlaylistDto struct {
 	Description string      `json:"description"`
 	LogoLink    string      `json:"logoLink"`
 	ChannelLink string      `json:"channelLink"`
-	Type        ChannelType `json:"channelType"`
+	Type        ChannelType `json:"type"`
 } //@name CreatePlaylistDto
 
 type UpdatePlaylistDto struct {
@@ -29,11 +29,11 @@ type UpdatePlaylistDto struct {
 	LogoLink    *string      `json:"logoLink"`
 	ChannelLink *string      `json:"channelLink"`
 	IsVisible   *bool        `json:"isVisible"`
-	Type        *ChannelType `json:"channelType"`
+	Type        *ChannelType `json:"type"`
 } //@name UpdatePlaylistDto
 
 type PlaylistQueryParams struct {
 	Name      *string      `query:"name"`
 	IsVisible *bool        `query:"isVisible"`
-	Type      *ChannelType `query:"channelType"`
+	Type      *ChannelType `query:"type"`
 } //@name PlaylistQueryParams

@@ -697,9 +697,6 @@ const docTemplate = `{
                 "channelLink": {
                     "type": "string"
                 },
-                "channelType": {
-                    "$ref": "#/definitions/ChannelType"
-                },
                 "description": {
                     "type": "string"
                 },
@@ -708,6 +705,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChannelType"
                 }
             }
         },
@@ -759,9 +759,6 @@ const docTemplate = `{
                 "channelLink": {
                     "type": "string"
                 },
-                "channelType": {
-                    "$ref": "#/definitions/ChannelType"
-                },
                 "description": {
                     "type": "string"
                 },
@@ -773,6 +770,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChannelType"
                 }
             }
         },

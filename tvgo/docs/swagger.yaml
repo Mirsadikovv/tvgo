@@ -14,14 +14,14 @@ definitions:
     properties:
       channelLink:
         type: string
-      channelType:
-        $ref: '#/definitions/ChannelType'
       description:
         type: string
       logoLink:
         type: string
       name:
         type: string
+      type:
+        $ref: '#/definitions/ChannelType'
     type: object
   CreateUserDto:
     properties:
@@ -54,8 +54,6 @@ definitions:
     properties:
       channelLink:
         type: string
-      channelType:
-        $ref: '#/definitions/ChannelType'
       description:
         type: string
       isVisible:
@@ -64,6 +62,8 @@ definitions:
         type: string
       name:
         type: string
+      type:
+        $ref: '#/definitions/ChannelType'
     type: object
   UpdateUserDto:
     properties:
