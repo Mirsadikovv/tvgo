@@ -92,9 +92,28 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "name": "isVisible",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "Searching by name or description",
-                        "name": "search",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "VIP",
+                            "SPORT",
+                            "FREE"
+                        ],
+                        "type": "string",
+                        "x-enum-varnames": [
+                            "VIP",
+                            "SPORT",
+                            "FREE"
+                        ],
+                        "name": "type",
                         "in": "query"
                     }
                 ],

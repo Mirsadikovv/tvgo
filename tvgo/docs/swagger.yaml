@@ -293,10 +293,23 @@ paths:
         in: query
         name: perpage
         type: string
-      - description: Searching by name or description
-        in: query
-        name: search
+      - in: query
+        name: isVisible
+        type: boolean
+      - in: query
+        name: name
         type: string
+      - enum:
+        - VIP
+        - SPORT
+        - FREE
+        in: query
+        name: type
+        type: string
+        x-enum-varnames:
+        - VIP
+        - SPORT
+        - FREE
       produces:
       - application/json
       responses:

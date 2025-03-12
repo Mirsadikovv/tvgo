@@ -75,11 +75,11 @@ func (s *playlistService) Find(ctx context.Context, scopes ...ServiceScope) ([]m
 
 func (s *playlistService) Page(ctx context.Context, take int, filter, limitFilter ServiceScope) (*dto.PagePlaylistResponseType, error) {
 
-	tx := s.ModelWithContext(ctx)
+	tx := s.ModelWithContext(ctx).Scopes(filter)
 
 	var total int64
 	{
-		txTotal := tx.Scopes(filter).Count(&total)
+		txTotal := tx.Count(&total)
 		if err := txTotal.Error; err != nil {
 			return nil, err
 		}
@@ -87,7 +87,7 @@ func (s *playlistService) Page(ctx context.Context, take int, filter, limitFilte
 
 	var playlists []*model.PlaylistModel
 	{
-		if err := tx.Scopes(filter, limitFilter).
+		if err := tx.Scopes(limitFilter).
 			Find(&playlists).Error; err != nil {
 			return nil, err
 		}

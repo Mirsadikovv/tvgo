@@ -81,31 +81,42 @@ func (e *playlistHandler) Create(c echo.Context) error {
 // @Produce      json
 // @Param        page query string false "Page number" default(1)
 // @Param        perpage query string false "Number of items per page" default(10)
-// @Param        search query string false "Searching by name or description"
+// @Param        playlist_page_query_params query dto.PlaylistQueryParams false "Searching by params"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
 // @Router       /playlist/page [get]
 func (e *playlistHandler) Page(c echo.Context) error {
 	var (
-		search   = c.QueryParam("search")
 		page     = c.QueryParam("page")
 		perPage  = c.QueryParam("perpage")
 		paginate = http.NewPaginate(page, perPage)
 		ctx      = c.Request().Context()
+		params   dto.PlaylistQueryParams
 	)
+
+	if err := c.Bind(&params); err != nil {
+		return http.HTTPError(err).BadRequest()
+	}
 
 	limitFilter := func(tx *gorm.DB) *gorm.DB {
 		return tx.Offset(paginate.Skip()).Limit(paginate.Take()).Order("id ASC")
 	}
 
 	filter := func(tx *gorm.DB) *gorm.DB {
-		tx = tx.Where("is_visible = ?", true)
 
-		if search != "" {
-			search = fmt.Sprintf("%%%s%%", search)
-			tx = tx.Where("name ILIKE ?", search)
+		if params.Name != nil {
+			tx = tx.Where("playlists.name ILIKE ?", fmt.Sprintf("%%%s%%", *params.Name))
 		}
+
+		if params.IsVisible != nil {
+			tx = tx.Where("playlists.is_visible = ?", *params.IsVisible)
+		}
+
+		if params.Type != nil {
+			tx = tx.Where("playlists.type = ?", *params.Type)
+		}
+
 		return tx
 	}
 
