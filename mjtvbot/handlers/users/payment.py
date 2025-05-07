@@ -11,21 +11,21 @@ from states.personalData import invoys
 from aiogram.dispatcher import FSMContext
 
 
-# @dp.message_handler(Command("VIP"))
-# async def show_invoices(message: types.Message):
-#     caption = "<b>Подписка VIP</b> .\n\n"
-#     caption += "Цена: <b>25 000 сум</b>\n"
-#     caption += "Скидка от админа: <b>-6 000 сум</b>"
-#     await message.answer_photo(photo="https://avatars.mds.yandex.net/i?id=e4e2d6728f62814504ae458a29efaafe-4265706-images-thumbs&n=13",
-#                          caption=caption, reply_markup=build_keyboard("VIP"))
+@dp.message_handler(Command("VIP"))
+async def show_invoices(message: types.Message):
+    caption = "<b>Подписка VIP</b> .\n\n"
+    caption += "Цена: <b>25 000 сум</b>\n"
+    caption += "Скидка от админа: <b>-6 000 сум</b>"
+    await message.answer_photo(photo="https://avatars.mds.yandex.net/i?id=473f5367daf1c25667a8e52cb6374327_l-12322699-images-thumbs&n=13",
+                         caption=caption, reply_markup=build_keyboard("VIP"))
 
-# @dp.message_handler(Command("sport"))
-# async def show_invoices(message: types.Message):
-#     caption = "<b>Подписка Sport</b> .\n\n"
-#     caption += "Цена: <b>20 000 сум</b>\n"
-#     caption += "Скидка от админа: <b>-5 000 сум</b>"
-#     await message.answer_photo(photo="https://avatars.mds.yandex.net/i?id=aa319fae26d038194a903b6c48b0780d4054b34f-9844228-images-thumbs&n=13",
-#                          caption=caption, reply_markup=build_keyboard("sport"))
+@dp.message_handler(Command("sport"))
+async def show_invoices(message: types.Message):
+    caption = "<b>Подписка Sport</b> .\n\n"
+    caption += "Цена: <b>20 000 сум</b>\n"
+    caption += "Скидка от админа: <b>-5 000 сум</b>"
+    await message.answer_photo(photo="https://avatars.mds.yandex.net/i?id=05a62a0e72c7c43e4675a0b259531612cb4db3b6-5133396-images-thumbs&n=13",
+                         caption=caption, reply_markup=build_keyboard("sport"))
 
 
 
