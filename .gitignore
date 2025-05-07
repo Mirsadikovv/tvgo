@@ -99,7 +99,6 @@ fabric.properties
 
 # Go workspace file
 go.work
-.env
 .idea
 
 .sql
