@@ -3,6 +3,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from keyboards.default.menuKeyboard import menu
 from keyboards.default.tarifKeyboard import tarif,tarif_VIP,tarif_sport,tarif_VIPandsport
 from keyboards.default.settingKeyboard import setting
+from dateutil.relativedelta import relativedelta
 
 import logging
 
@@ -35,6 +36,7 @@ async def send_link(message: Message):
                 # print("sddddddddddddddddd",i)
                 break
             date_only = status_end.date()
+            date_only = date_only + relativedelta(months=1)  # Add one month
             status_end = date_only.strftime('%d.%m.%Y')
             for j in current_time:
                 for k in j:
@@ -62,6 +64,7 @@ async def send_link(message: Message):
                 # print("sddddddddddddddddd",i)
                 break
             date_only = status_end.date()
+            date_only = date_only + relativedelta(months=1)  # Add one month
             status_end = date_only.strftime('%d.%m.%Y')
             for j in current_time:
                 for k in j:
@@ -89,6 +92,7 @@ async def send_link(message: Message):
                 # print("sddddddddddddddddd",i)
                 break
             date_only = status_end.date()
+            date_only = date_only + relativedelta(months=1)  # Add one month
             status_end = date_only.strftime('%d.%m.%Y')
             for j in current_time:
                 for k in j:
