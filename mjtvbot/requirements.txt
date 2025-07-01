@@ -2,3 +2,4 @@ aiogram~=2.25.1
 environs~=8.0.0
 asyncpg
 marshmallow==3.19.0
+python-dateutil~=2.8.2
