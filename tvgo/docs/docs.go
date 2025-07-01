@@ -15,6 +15,53 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/genadi": {
+            "post": {
+                "description": "Create geandi",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "geandi"
+                ],
+                "summary": "Create a new geandi",
+                "operationId": "create-geandi",
+                "parameters": [
+                    {
+                        "description": "geandi information",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateGenadiDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ID"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/playlist": {
             "post": {
                 "description": "Create playlist",
@@ -709,6 +756,14 @@ const docTemplate = `{
                 "SPORT",
                 "FREE"
             ]
+        },
+        "CreateGenadiDto": {
+            "type": "object",
+            "properties": {
+                "swagger": {
+                    "type": "string"
+                }
+            }
         },
         "CreatePlaylistDto": {
             "type": "object",

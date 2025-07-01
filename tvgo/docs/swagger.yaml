@@ -10,6 +10,11 @@ definitions:
     - VIP
     - SPORT
     - FREE
+  CreateGenadiDto:
+    properties:
+      swagger:
+        type: string
+    type: object
   CreatePlaylistDto:
     properties:
       channelLink:
@@ -134,6 +139,37 @@ info:
   title: TVGO API Server
   version: "1.0"
 paths:
+  /genadi:
+    post:
+      consumes:
+      - application/json
+      description: Create geandi
+      operationId: create-geandi
+      parameters:
+      - description: geandi information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/CreateGenadiDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new geandi
+      tags:
+      - geandi
   /playlist:
     post:
       consumes:
