@@ -3,7 +3,6 @@ module github.com/Mirsadikovv/tvgo
 go 1.24.1
 
 require (
-	git.sriss.uz/shared/shared_service v0.0.0-20250621104934-dda5fc424b48
 	github.com/fobus1289/ufa_shared v0.6.5
 	github.com/iancoleman/strcase v0.3.0
 	github.com/labstack/echo/v4 v4.13.3
@@ -46,6 +45,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/mod v0.24.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect

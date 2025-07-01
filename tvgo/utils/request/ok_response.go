@@ -1,6 +1,6 @@
 package request
 
-import "git.sriss.uz/shared/shared_service/response"
+import "github.com/Mirsadikovv/tvgo/utils/response"
 
 func (r *request[T]) OK(data ...any) error {
 	return response.Response(r.ctx).OK(data...)
