@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	v2 "git.sriss.uz/shared/genadi/swagger/v2"
 	"git.sriss.uz/shared/shared_service/request"
+	v2 "github.com/Mirsadikovv/tvgo/genadi/dto/v2"
 	"github.com/Mirsadikovv/tvgo/genadi/internal"
 	_ "github.com/Mirsadikovv/tvgo/utils"
 	_ "github.com/fobus1289/ufa_shared/http/response"

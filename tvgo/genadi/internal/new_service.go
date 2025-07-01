@@ -5,8 +5,8 @@ import (
 	"log"
 	"path"
 
-	v2 "git.sriss.uz/shared/genadi/swagger/v2"
 	"github.com/Mirsadikovv/tvgo/genadi/dto"
+	v2 "github.com/Mirsadikovv/tvgo/genadi/dto/v2"
 	"github.com/Mirsadikovv/tvgo/genadi/service"
 	"github.com/Mirsadikovv/tvgo/genadi/stuble"
 	"github.com/iancoleman/strcase"
