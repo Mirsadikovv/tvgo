@@ -10,8 +10,11 @@ COPY . .
 
 RUN go build -o tvgo ./main.go
 
+RUN swag init -g main.go -o ./docs
+
 RUN chmod +x start.sh
 
 EXPOSE 8083
 
 CMD ["./start.sh"]
+
