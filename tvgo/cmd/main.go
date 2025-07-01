@@ -16,6 +16,8 @@ import (
 	playlistModel "github.com/Mirsadikovv/tvgo/playlist/model"
 	playlistService "github.com/Mirsadikovv/tvgo/playlist/service"
 
+	genadiHandler "github.com/Mirsadikovv/tvgo/genadi/handler"
+
 	loader "github.com/fobus1289/ufa_shared/config"
 	"github.com/fobus1289/ufa_shared/pg"
 	"github.com/labstack/echo/v4"
@@ -77,5 +79,6 @@ func createHandler(router *echo.Echo, db *gorm.DB) {
 
 		userHandler.NewHandler(group, userService.NewService(db))
 		playlistHandler.NewHandler(group, playlistService.NewService(db))
+		genadiHandler.NewHandler(group)
 	}
 }

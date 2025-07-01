@@ -1,9 +1,12 @@
 module github.com/Mirsadikovv/tvgo
 
-go 1.22.1
+go 1.24.1
 
 require (
+	git.sriss.uz/shared/genadi v0.0.0-20250627113618-dda6900c4b37
+	git.sriss.uz/shared/shared_service v0.0.0-20250621104934-dda5fc424b48
 	github.com/fobus1289/ufa_shared v0.6.5
+	github.com/iancoleman/strcase v0.3.0
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/swaggo/echo-swagger v1.4.1
 	github.com/swaggo/swag v1.16.4
@@ -13,7 +16,7 @@ require (
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/caarlos0/env/v11 v11.2.2 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.6 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
@@ -21,7 +24,7 @@ require (
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.22.1 // indirect
+	github.com/go-playground/validator/v10 v10.25.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.14.3 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect

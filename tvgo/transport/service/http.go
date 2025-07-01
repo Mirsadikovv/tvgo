@@ -1,6 +1,7 @@
 package service
 
 import (
+	genadiHandler "github.com/Mirsadikovv/tvgo/genadi/handler"
 	playlistHandler "github.com/Mirsadikovv/tvgo/playlist/handler"
 	playlistService "github.com/Mirsadikovv/tvgo/playlist/service"
 	userHandler "github.com/Mirsadikovv/tvgo/user/handler"
@@ -11,7 +12,7 @@ import (
 
 func NewService(routerGroup *echo.Group, db *gorm.DB) {
 	userHandler.NewHandler(routerGroup, userService.NewService(db))
-	playlistHandler.
-		NewHandler(routerGroup, playlistService.NewService(db))
+	playlistHandler.NewHandler(routerGroup, playlistService.NewService(db))
+	genadiHandler.NewHandler(routerGroup)
 
 }
