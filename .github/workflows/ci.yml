@@ -28,7 +28,8 @@ jobs:
       # Сборка и запуск сервисов
       - name: Build and start services
         run: |
-          docker-compose up -d --build
+            docker compose up --build --force-recreate --remove-orphans -d
+
 
       # Проверка сервисов
       # - name: Test services
