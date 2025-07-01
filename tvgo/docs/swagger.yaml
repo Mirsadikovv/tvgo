@@ -169,7 +169,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
       summary: Create a new geandi
       tags:
-      - geandi
+      - geandiii
   /playlist:
     post:
       consumes:

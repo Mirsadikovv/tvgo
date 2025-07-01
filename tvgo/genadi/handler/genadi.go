@@ -33,7 +33,7 @@ func NewHandler(router *echo.Group) {
 // Create 		 godoc
 // @Summary      Create a new geandi
 // @Description  Create geandi
-// @Tags 		 geandi
+// @Tags 		 geandiii
 // @ID           create-geandi
 // @Accept       json
 // @Produce      json

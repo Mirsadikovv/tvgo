@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "geandi"
+                    "geandiii"
                 ],
                 "summary": "Create a new geandi",
                 "operationId": "create-geandi",
