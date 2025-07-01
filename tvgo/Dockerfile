@@ -5,6 +5,15 @@ RUN apk add --no-cache git
 
 WORKDIR /app
 
+# Устанавливаем swag
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+
+# Убедимся, что $GOPATH/bin добавлен в $PATH
+ENV PATH=$PATH:/go/bin
+
+# Генерируем Swagger-документацию
+RUN swag init -g main.go -o ./docs
+
 # Копируем go.mod и go.sum и скаливаем зависимости
 COPY go.mod go.sum ./
 RUN go mod download
@@ -18,14 +27,6 @@ RUN go build -o tvgo ./main.go
 # Делаем start.sh исполняемым
 RUN chmod +x start.sh
 
-# Устанавливаем swag
-RUN go install github.com/swaggo/swag/cmd/swag@latest
-
-# Убедимся, что $GOPATH/bin добавлен в $PATH
-ENV PATH=$PATH:/go/bin
-
-# Генерируем Swagger-документацию
-RUN swag init -g main.go -o ./docs
 
 # Открываем порт
 EXPOSE 8083
