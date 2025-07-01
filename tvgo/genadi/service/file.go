@@ -6,7 +6,7 @@ import (
 
 	"os"
 
-	v2 "git.sriss.uz/shared/genadi/swagger/v2"
+	v2 "github.com/Mirsadikovv/tvgo/genadi/dto/v2"
 )
 
 func CreateFiles(serviceName string, jsonData v2.SwaggerObject, files map[string]string) (bytes.Buffer, error) {
@@ -41,5 +41,3 @@ func CreateFiles(serviceName string, jsonData v2.SwaggerObject, files map[string
 
 	return buffer, nil
 }
-
-

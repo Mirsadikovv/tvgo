@@ -3,7 +3,6 @@ module github.com/Mirsadikovv/tvgo
 go 1.24.1
 
 require (
-	git.sriss.uz/shared/genadi v0.0.0-20250627113618-dda6900c4b37
 	git.sriss.uz/shared/shared_service v0.0.0-20250621104934-dda5fc424b48
 	github.com/fobus1289/ufa_shared v0.6.5
 	github.com/iancoleman/strcase v0.3.0

@@ -1,7 +1,5 @@
 filippo.io/edwards25519 v1.1.0 h1:FNf4tywRC1HmFuKW5xopWpigGjJKiJSV0Cqo0cJWDaA=
 filippo.io/edwards25519 v1.1.0/go.mod h1:BxyFTGdWcka3PhytdK4V28tE5sGfRvvvRV7EaN4VDT4=
-git.sriss.uz/shared/genadi v0.0.0-20250627113618-dda6900c4b37 h1:ImrrlipzabvYZQfZhN3NeXZo0moowz/BKQBZ68dbLXE=
-git.sriss.uz/shared/genadi v0.0.0-20250627113618-dda6900c4b37/go.mod h1:3GCjdaEFGIQ6Cw+OSD9Py2LR4R4hF/heNdTH+9ocFaE=
 git.sriss.uz/shared/shared_service v0.0.0-20250621104934-dda5fc424b48 h1:t8O3JsSlbdlG8Wft7LzrOAbGeMDFOWqxw6JUpVeVDIU=
 git.sriss.uz/shared/shared_service v0.0.0-20250621104934-dda5fc424b48/go.mod h1:/HQqhGOO5+lVaz0VAqYUr76KtwiWVMooxSlYBrnTEMI=
 github.com/KyleBanks/depth v1.2.1 h1:5h8fQADFrWtarTdtDudMmGsC7GPbOAu6RVB3ffsVFHc=
