@@ -5,6 +5,13 @@ RUN apk add --no-cache git
 
 WORKDIR /app
 
+# Копируем go.mod и go.sum и скаливаем зависимости
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Копирум весь исходный код
+COPY . .
+
 # Устанавливаем swag
 RUN go install github.com/swaggo/swag/cmd/swag@latest
 
@@ -13,13 +20,6 @@ ENV PATH=$PATH:/go/bin
 
 # Генерируем Swagger-документацию
 RUN swag init -g main.go -o ./docs
-
-# Копируем go.mod и go.sum и скаливаем зависимости
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Копирум весь исходный код
-COPY . .
 
 # Компилируем приложение
 RUN go build -o tvgo ./main.go
