@@ -10,13 +10,13 @@ COPY . .
 
 RUN go build -o tvgo ./main.go
 
-RUN go install github.com/swaggo/swag/cmd/swag@latest
-
-RUN swag init -g main.go -o ./tvgo/docs
-
 RUN chmod +x start.sh
 
 EXPOSE 8083
+
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+
+RUN swag init -g main.go -o ./docs
 
 CMD ["./start.sh"]
 
