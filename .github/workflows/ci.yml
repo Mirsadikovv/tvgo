@@ -1,74 +1,20 @@
-name: CI/CD Pipeline
-
+name: CI
 on:
+  workflow_dispatch:
   push:
-    branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
-
+    branches:
+      - dev
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout кода
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Настройка Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # Установка docker-compose
-      - name: Install docker-compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
-
-      # Сборка и запуск сервисов
-      - name: Build and start services
-        run: |
-            docker compose up --build --force-recreate --remove-orphans -d
-
-
-      # Проверка сервисов
-      # - name: Test services
-      #   run: |
-      #     until docker-compose exec -T bot_db pg_isready -U mirodil -d tvgo_db; do
-      #       echo "Waiting for database..."
-      #       sleep 5
-      #     done
-      #     docker-compose exec -T python_bot curl -f http://localhost:8082/health || exit 1
-      #     docker-compose exec -T go_tvgo curl -f http://localhost:8083/health || exit 1
-
-      # # Остановка сервисов
-      # - name: Stop services
-      #   run: |
-      #     docker-compose down
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
+  build:
+    runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install sshpass
+        uses: actions/checkout@v4
+      - name: Check Docker Compose
+        run: docker-compose version
+      - name: Build and deploy
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-      - name: Deploy to server
-        run: |
-          DEPLOY_SERVER="64.227.72.36"
-          DEPLOY_USER="root"
-          DEPLOY_PASSWORD="5610056Mm"
-
-          echo "Deploying to $DEPLOY_USER@$DEPLOY_SERVER"
-          sshpass -p "$DEPLOY_PASSWORD" scp -o StrictHostKeyChecking=no docker-compose.yml ${DEPLOY_USER}@${DEPLOY_SERVER}:/${DEPLOY_USER}/tvgo/docker-compose.yml
-          sshpass -p "$DEPLOY_PASSWORD" ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_SERVER} << 'EOF'
-            cd /root/tvgo
-            docker-compose down --rmi all  # Останавливает и удаляет контейнеры и образы
-            git pull origin dev            # Обновляет код (если нужен)
-            docker-compose up -d --build   # Запускает с нуля, пересобирая образы
-            docker system prune -f         # Удаляет неиспользуемые данные
-          EOF
+          export CI_JOB_LOGIN=x
+          export CI_JOB_TOKEN=${{ secrets.PAT_TOKEN }}
+          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          docker compose -f docker-compose.yml up --build --force-recreate --remove-orphans -d

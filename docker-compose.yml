@@ -4,12 +4,12 @@ services:
     environment:
       POSTGRES_DB: tvgo_db
       POSTGRES_USER: mirodil
-      POSTGRES_PASSWORD: 1212
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     volumes:
       - postgres_tvgo:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5434:5432" # Мапируем порт 5432 контейнера на 5434 хоста
+      - "5434:5432"
     networks:
       - default
     healthcheck:
@@ -17,6 +17,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    secrets:
+      - postgres_password
 
   python_bot:
     build:
@@ -24,9 +26,10 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - bot_db
+      bot_db:
+        condition: service_healthy
     environment:
-      DATABASE_URL: postgres://mirodil:1212@bot_db:5432/tvgo_db?sslmode=disable # Обновлено на 5432
+      DATABASE_URL: postgres://mirodil:${POSTGRES_PASSWORD}@bot_db:5432/tvgo_db?sslmode=disable
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
       interval: 30s
@@ -34,16 +37,22 @@ services:
       retries: 3
     networks:
       - default
+    secrets:
+      - postgres_password
 
   go_tvgo:
     build:
       context: ./tvgo
+      args:
+        CI_JOB_LOGIN: ${CI_JOB_LOGIN}
+        CI_JOB_TOKEN: ${CI_JOB_TOKEN}
     ports:
       - "8083:8083"
     depends_on:
-      - bot_db
+      bot_db:
+        condition: service_healthy
     environment:
-      DATABASE_URL: postgres://mirodil:1212@bot_db:5432/tvgo_db?sslmode=disable # Обновлено на 5432
+      DATABASE_URL: postgres://mirodil:${POSTGRES_PASSWORD}@bot_db:5432/tvgo_db?sslmode=disable
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
       interval: 30s
@@ -51,9 +60,15 @@ services:
       retries: 3
     networks:
       - default
+    secrets:
+      - postgres_password
 
 volumes:
   postgres_tvgo:
 
 networks:
   default:
+
+secrets:
+  postgres_password:
+    environment: POSTGRES_PASSWORD
