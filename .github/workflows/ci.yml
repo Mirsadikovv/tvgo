@@ -1,20 +1,26 @@
 name: CI
+
 on:
   workflow_dispatch:
   push:
     branches:
       - dev
+
 jobs:
   build:
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Check Docker Compose
         run: docker-compose version
+
       - name: Build and deploy
+        env:
+          CI_JOB_LOGIN: x
+          CI_JOB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          export CI_JOB_LOGIN=x
-          export CI_JOB_TOKEN=${{ secrets.PAT_TOKEN }}
-          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-          docker compose -f docker-compose.yml up --build --force-recreate --remove-orphans -d
+          docker compose -f docker-compose.yml down --remove-orphans
+          docker compose -f docker-compose.yml up --build --force-recreate -d

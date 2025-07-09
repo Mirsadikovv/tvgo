@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: tvgo_db
       POSTGRES_USER: mirodil
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_tvgo:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -17,8 +17,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    secrets:
-      - postgres_password
 
   python_bot:
     build:
@@ -37,8 +35,6 @@ services:
       retries: 3
     networks:
       - default
-    secrets:
-      - postgres_password
 
   go_tvgo:
     build:
@@ -60,15 +56,9 @@ services:
       retries: 3
     networks:
       - default
-    secrets:
-      - postgres_password
 
 volumes:
   postgres_tvgo:
 
 networks:
   default:
-
-secrets:
-  postgres_password:
-    environment: POSTGRES_PASSWORD

@@ -7,7 +7,6 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-
 RUN go install github.com/swaggo/swag/cmd/swag@latest
 
 ENV PATH=$PATH:/go/bin
@@ -20,8 +19,6 @@ RUN go build -o tvgo ./main.go
 
 RUN chmod +x start.sh
 
-
 EXPOSE 8083
 
-# Запускаем приложение
 CMD ["./start.sh"]
