@@ -13,14 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check Docker Compose
-        run: docker-compose version
+      - name: Check Docker Compose version
+        run: docker compose version
 
-      - name: Build and deploy
+      - name: Stop and remove old containers
+        run: docker compose -f docker-compose.yml down --remove-orphans
+
+      - name: Build and deploy services
         env:
           CI_JOB_LOGIN: x
           CI_JOB_TOKEN: ${{ secrets.PAT_TOKEN }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          docker compose -f docker-compose.yml down --remove-orphans
           docker compose -f docker-compose.yml up --build --force-recreate -d
+
+      - name: Show running containers
+        run: docker ps
