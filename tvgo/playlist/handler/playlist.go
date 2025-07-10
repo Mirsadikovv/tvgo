@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/Mirsadikovv/tvgo/playlist/model"
 	_ "github.com/Mirsadikovv/tvgo/utils"
+	"github.com/Mirsadikovv/tvgo/utils/middleware"
 	_ "github.com/fobus1289/ufa_shared/http/response"
 
 	"github.com/Mirsadikovv/tvgo/playlist/dto"
@@ -23,13 +24,13 @@ type playlistHandler struct {
 
 func NewHandler(router *echo.Group, service service.PlaylistService) {
 
-	group := router.Group("/playlist")
+	group := router.Group("/playlist", middleware.XKeyMiddleware)
 	{
 		handler := &playlistHandler{service: service}
 
 		group.POST("", handler.Create)
-		group.GET("/page", handler.Page)
-		group.GET("/:id", handler.GetById)
+		router.GET("/playlist/page", handler.Page)
+		router.GET("/playlist/:id", handler.GetById)
 		group.GET("/search", handler.Search)
 		group.PATCH("/:id", handler.Update)
 		group.PUT("/:id", handler.ChangeVisibility)
@@ -46,6 +47,7 @@ func NewHandler(router *echo.Group, service service.PlaylistService) {
 // @Accept       json
 // @Produce      json
 // @Param        input body dto.CreatePlaylistDto true "playlist information"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      201 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -82,6 +84,7 @@ func (e *playlistHandler) Create(c echo.Context) error {
 // @Param        page query string false "Page number" default(1)
 // @Param        perpage query string false "Number of items per page" default(10)
 // @Param        playlist_page_query_params query dto.PlaylistQueryParams false "Searching by params"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -138,6 +141,7 @@ func (e *playlistHandler) Page(c echo.Context) error {
 // @Produce      json
 // @Param        playlist_query_params query dto.PlaylistQueryParams false "Searching by params"
 // @Param        limit  query int    false "Limit the number of results" default(20)
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -200,6 +204,7 @@ func (e *playlistHandler) Search(c echo.Context) error {
 // @Accept       json
 // @Produce      json
 // @Param        id path string true "playlist ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} model.PlaylistModel "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -238,6 +243,7 @@ func (e *playlistHandler) GetById(c echo.Context) error {
 // @Accept       json
 // @Param        id path string true "playlist ID"
 // @Param        input body dto.UpdatePlaylistDto true "playlist information"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -279,6 +285,7 @@ func (e *playlistHandler) Update(c echo.Context) error {
 // @ID           delete-playlist
 // @Accept       json
 // @Param        id path string true "playlist ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -312,6 +319,7 @@ func (e *playlistHandler) Delete(c echo.Context) error {
 // @ID           change-visibility-playlist
 // @Accept       json
 // @Param        id path string true "playlist ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"

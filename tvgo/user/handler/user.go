@@ -8,6 +8,7 @@ import (
 
 	_ "github.com/Mirsadikovv/tvgo/user/model"
 	_ "github.com/Mirsadikovv/tvgo/utils"
+	"github.com/Mirsadikovv/tvgo/utils/middleware"
 	_ "github.com/fobus1289/ufa_shared/http/response"
 
 	"github.com/Mirsadikovv/tvgo/user/dto"
@@ -24,7 +25,7 @@ type userHandler struct {
 
 func NewHandler(router *echo.Group, service service.UserService) {
 
-	group := router.Group("/user")
+	group := router.Group("/user", middleware.XKeyMiddleware)
 	{
 		handler := &userHandler{service: service}
 
@@ -47,6 +48,7 @@ func NewHandler(router *echo.Group, service service.UserService) {
 // @Accept       json
 // @Produce      json
 // @Param        input body dto.CreateUserDto true "user information"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      201 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -83,6 +85,7 @@ func (e *userHandler) Create(c echo.Context) error {
 // @Param        page query string false "Page number" default(1)
 // @Param        perpage query string false "Number of items per page" default(10)
 // @Param        search query string false "Searching by name or description"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -128,6 +131,7 @@ func (e *userHandler) Page(c echo.Context) error {
 // @Produce      json
 // @Param        search query string false "Searching by name or description"
 // @Param        limit  query int    false "Limit the number of results" default(20)
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -176,6 +180,7 @@ func (e *userHandler) Search(c echo.Context) error {
 // @Accept       json
 // @Produce      json
 // @Param        id path string true "user ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      200 {object} model.UserModel "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -214,6 +219,7 @@ func (e *userHandler) GetById(c echo.Context) error {
 // @Accept       json
 // @Param        id path string true "user ID"
 // @Param        input body dto.UpdateUserDto true "user information"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -255,6 +261,7 @@ func (e *userHandler) Update(c echo.Context) error {
 // @ID           delete-user
 // @Accept       json
 // @Param        id path string true "user ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -288,6 +295,7 @@ func (e *userHandler) Delete(c echo.Context) error {
 // @ID           change-visibility-user
 // @Accept       json
 // @Param        id path string true "user ID"
+// @Param        X-Key header string false "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
