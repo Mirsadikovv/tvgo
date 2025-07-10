@@ -13,7 +13,7 @@ ENV PATH=$PATH:/go/bin
 
 COPY . .
 
-RUN swag init -g main.go -o ./docs
+RUN swag init -g main.go -o docs
 
 RUN go build -o tvgo ./main.go
 
