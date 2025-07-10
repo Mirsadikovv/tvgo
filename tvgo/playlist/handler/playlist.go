@@ -47,7 +47,7 @@ func NewHandler(router *echo.Group, service service.PlaylistService) {
 // @Accept       json
 // @Produce      json
 // @Param        input body dto.CreatePlaylistDto true "playlist information"
-// @Param        X-Key header string false "API Key for authentication"
+// @Param        X-Key header string true "API Key for authentication"
 // @Success      201 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -141,7 +141,7 @@ func (e *playlistHandler) Page(c echo.Context) error {
 // @Produce      json
 // @Param        playlist_query_params query dto.PlaylistQueryParams false "Searching by params"
 // @Param        limit  query int    false "Limit the number of results" default(20)
-// @Param        X-Key header string false "API Key for authentication"
+// @Param        X-Key header string true "API Key for authentication"
 // @Success      200 {object} utils.ID "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -243,7 +243,7 @@ func (e *playlistHandler) GetById(c echo.Context) error {
 // @Accept       json
 // @Param        id path string true "playlist ID"
 // @Param        input body dto.UpdatePlaylistDto true "playlist information"
-// @Param        X-Key header string false "API Key for authentication"
+// @Param        X-Key header string true "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -285,7 +285,7 @@ func (e *playlistHandler) Update(c echo.Context) error {
 // @ID           delete-playlist
 // @Accept       json
 // @Param        id path string true "playlist ID"
-// @Param        X-Key header string false "API Key for authentication"
+// @Param        X-Key header string true "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
@@ -319,7 +319,7 @@ func (e *playlistHandler) Delete(c echo.Context) error {
 // @ID           change-visibility-playlist
 // @Accept       json
 // @Param        id path string true "playlist ID"
-// @Param        X-Key header string false "API Key for authentication"
+// @Param        X-Key header string true "API Key for authentication"
 // @Success      204 "Successful operation"
 // @Failure      400 {object} utils.ErrorResponse "Bad request"
 // @Failure      500 {object} utils.ErrorResponse "Internal server error"
