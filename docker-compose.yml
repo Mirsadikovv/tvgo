@@ -28,6 +28,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgres://mirodil:${POSTGRES_PASSWORD}@bot_db:5432/tvgo_db?sslmode=disable
+      BOT_TOKEN: ${BOT_TOKEN}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
       interval: 30s
