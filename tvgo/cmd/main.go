@@ -28,7 +28,7 @@ import (
 func Exec() {
 
 	projectEnv := loader.ProjectEnv()
-
+	log.Println(os.Getenv("POSTGRES_PASSWORD"), "-----------------------")
 	pgConfig := pg.NewConfigEmpty()
 	{
 		pgConfig.SetHost(projectEnv.PgHost).
