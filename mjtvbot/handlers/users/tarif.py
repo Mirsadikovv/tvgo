@@ -28,14 +28,14 @@ async def send_link(message: Message):
         "Для покупки нажмите👇"
     )
 
-    with open(photo_path, "rb") as photo:
-        await message.answer_photo(
-            photo=photo,
-            caption=caption,
-            parse_mode="HTML",
-            reply_markup=build_keyboard("VIP")
-        )
-        
+    photo = open(photo_path, "rb") 
+
+    await message.answer_photo(
+        photo=photo,
+        caption=caption,
+        reply_markup=build_keyboard("VIP")
+    )
+
 @dp.message_handler(text='Sport')
 async def send_link(message: Message):
     photo = "AgACAgIAAxkBAAIBomgbnxMqDrIBd1WybWWKccDWS64TAAKe8zEbv8bhSBrUvO625YPgAQADAgADeAADNgQ"
