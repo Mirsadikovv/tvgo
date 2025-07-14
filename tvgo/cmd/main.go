@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"log"
+	"os"
 	"strconv"
 
 	_ "github.com/Mirsadikovv/tvgo/docs"
@@ -34,7 +35,7 @@ func Exec() {
 			SetPort(projectEnv.PgPort).
 			SetDbname(projectEnv.PgDB).
 			SetUser(projectEnv.PgUser).
-			SetPassword(projectEnv.PgPassword)
+			SetPassword(os.Getenv("POSTGRES_PASSWORD"))
 	}
 
 	db, err := pg.NewGorm(&pgConfig)
