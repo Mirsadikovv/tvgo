@@ -16,6 +16,7 @@ class Product:
     start_parameter:               str
     currency:                      str
     prices:                        List[LabeledPrice]
+    photo:                         str = None
     provider_data:                 dict = None
     photo_url:                     str = None
     photo_size:                    int = None
@@ -27,7 +28,7 @@ class Product:
     need_shipping_address:         bool = False
     send_phone_number_to_provider: bool = False
     send_email_to_provider:        bool = False
-    is_flexible:                   bool = False
+    is_flexible:                   bool = True
 
     provider_token:                str = config.PROVIDER_TOKEN
 
