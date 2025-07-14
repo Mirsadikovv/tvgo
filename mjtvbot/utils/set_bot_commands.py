@@ -5,11 +5,11 @@ from environs import Env
 env = Env()
 env.read_env()
 
-admins = env.str("ADMINS")
+admins = list(map(int, env.list("ADMINS")))
 
 async def set_default_commands(dp):
     current_user = await dp.bot.get_me()
-    if current_user in admins:
+    if current_user.id in admins:
         await dp.bot.set_my_commands(
             [
                 types.BotCommand("start", "Начать работу"),
