@@ -19,7 +19,8 @@ ds_vip = Product(
         ),
     ],
     start_parameter="create_invoice_ds_vip",
-    photo_url='https://avatars.mds.yandex.net/i?id=e4e2d6728f62814504ae458a29efaafe-4265706-images-thumbs&n=13',
+    # photo_url='https://avatars.mds.yandex.net/i?id=e4e2d6728f62814504ae458a29efaafe-4265706-images-thumbs&n=13',
+    photo_url="https://github.com/Mirsadikovv/tvgo/blob/dev/mjtvbot/data/vip.png?raw=true",
     photo_width=1200,
     photo_height=800,
 
