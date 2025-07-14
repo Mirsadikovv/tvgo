@@ -47,8 +47,17 @@ async def send_link(message: Message):
     caption += "Скидка от админа: <b>-3 000 сум</b>\n"
     caption += "Итого к оплате: 13 000\n\n"
     caption += "Для покупки нажмите👇" 
-    await message.answer_photo(photo = photo,caption = caption,reply_markup=build_keyboard("sport"))
-
+    
+    photo_path = "data/sport.png"
+    try:
+        with open(photo_path, "rb") as photo:
+            await message.answer_photo(
+                photo=photo,
+                caption=caption,
+                reply_markup=build_keyboard("sport")
+            )
+    except FileNotFoundError:
+        await message.answer(caption + "\n\nОшибка отправки фото")
 
 @dp.message_handler(text='Назад🔙')
 async def send_link(message: Message):

@@ -22,7 +22,7 @@ ds_vip = Product(
         ),
     ],
     start_parameter="create_invoice_ds_vip",
-    photo_url=os.path.join(os.path.dirname(__file__), 'vip.png'),
+    photo_url=os.path.join(os.path.dirname(__file__), 'data/vip.png'),
     photo_width=1200,
     photo_height=800,
 
@@ -47,7 +47,7 @@ ds_sport = Product(
         ),
     ],
     start_parameter="create_invoice_ds_vip",
-    photo_url=os.path.join(os.path.dirname(__file__), 'sport.png'),
+    photo_url=os.path.join(os.path.dirname(__file__), 'data/sport.png'),
     photo_width=1200,
     photo_height=800,
 
