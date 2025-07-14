@@ -4,6 +4,9 @@ from aiogram.types import LabeledPrice
 from utils.misc.product import Product
 
 
+import os
+
+
 ds_vip = Product(
     title="VIP",
     description="Оплатите чтобы купить подписку VIP",
@@ -19,7 +22,7 @@ ds_vip = Product(
         ),
     ],
     start_parameter="create_invoice_ds_vip",
-    photo_url='https://avatars.mds.yandex.net/i?id=e4e2d6728f62814504ae458a29efaafe-4265706-images-thumbs&n=13',
+    photo_url=os.path.join(os.path.dirname(__file__), 'vip.png'),
     photo_width=1200,
     photo_height=800,
 
@@ -44,7 +47,7 @@ ds_sport = Product(
         ),
     ],
     start_parameter="create_invoice_ds_vip",
-    photo_url='https://avatars.mds.yandex.net/i?id=aa319fae26d038194a903b6c48b0780d4054b34f-9844228-images-thumbs&n=13',
+    photo_url=os.path.join(os.path.dirname(__file__), 'sport.png'),
     photo_width=1200,
     photo_height=800,
 

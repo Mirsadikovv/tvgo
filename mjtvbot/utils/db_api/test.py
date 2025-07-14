@@ -5,17 +5,17 @@ from postgresql import Database
 
 nest_asyncio.apply() 
 
-async def test():
-    db = Database()
-    await db.create()
-    await db.alter_table()
-    print("Users jadvalini yaratamiz...")
-    # await db.drop_users()
-    await db.create_table_users()
-    print("Yaratildi")
+# async def test():
+#     db = Database()
+#     await db.create()
+#     await db.alter_table()
+#     print("Users jadvalini yaratamiz...")
+#     # await db.drop_users()
+#     await db.create_table_users()
+#     print("Yaratildi")
 
-    # await db.drop_users()
-    print("ooooooooooooooooooooooooooooooooo")
+#     # await db.drop_users()
+#     print("ooooooooooooooooooooooooooooooooo")
     # print("Foydalanuvchilarni qo'shamiz")
 
     # await db.add_user("anvar", "sariqdev", 123456789)
@@ -31,15 +31,15 @@ async def test():
     # user = await db.select_user(id=5)
     # print(f"Foydalanuvchi: {user}")
 
-    async def alter_table(self):
-        sql = "ALTER TABLE users ADD COLUMN subscription_date TIMESTAMP"
-        return await self.execute(sql)
+    # async def alter_table(self):
+    #     sql = "ALTER TABLE users ADD COLUMN subscription_date TIMESTAMP"
+    #     return await self.execute(sql)
 
 
-async def main():
-    await test()
+# async def main():
+#     await test()
 
-asyncio.run(main())
+# asyncio.run(main())
 
 # asyncio.run(test())
 # asyncio.run(test())
