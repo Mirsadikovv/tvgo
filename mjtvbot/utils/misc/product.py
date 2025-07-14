@@ -17,7 +17,7 @@ class Product:
     currency:                      str
     prices:                        List[LabeledPrice]
     provider_data:                 dict = None
-    photo_url:                     str = None
+    photo_url:                     str
     photo_size:                    int = None
     photo_width:                   int = None
     photo_height:                  int = None
