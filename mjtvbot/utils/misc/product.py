@@ -27,7 +27,7 @@ class Product:
     need_shipping_address:         bool = False
     send_phone_number_to_provider: bool = False
     send_email_to_provider:        bool = False
-    is_flexible:                   bool = True
+    is_flexible:                   bool = False
 
     provider_token:                str = config.PROVIDER_TOKEN
 
