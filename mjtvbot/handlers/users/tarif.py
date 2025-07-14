@@ -40,7 +40,7 @@ async def send_link(message: Message):
 
 @dp.message_handler(text='Sport')
 async def send_link(message: Message):
-    photo = "AgACAgIAAxkBAAIBomgbnxMqDrIBd1WybWWKccDWS64TAAKe8zEbv8bhSBrUvO625YPgAQADAgADeAADNgQ"
+    # photo = "AgACAgIAAxkBAAIBomgbnxMqDrIBd1WybWWKccDWS64TAAKe8zEbv8bhSBrUvO625YPgAQADAgADeAADNgQ"
     caption =  "В тариф Sport входит\n\n"
     
     caption += "Цена: <b>16 000 сум</b>\n"
