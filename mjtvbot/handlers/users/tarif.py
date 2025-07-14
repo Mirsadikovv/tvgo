@@ -19,7 +19,7 @@ from loader import dp
 
 @dp.message_handler(text='VIP')
 async def send_link(message: Message):
-    photo_path = "vip.png"  # если файл лежит рядом с этим скриптом
+    photo_path = "data/vip.png"  # если файл лежит рядом с этим скриптом
     caption = (
         "В тариф VIP входит\n\n"
         "Цена: <b>22 000 сум</b>\n"
