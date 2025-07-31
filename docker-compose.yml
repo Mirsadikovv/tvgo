@@ -40,9 +40,9 @@ services:
   go_tvgo:
     build:
       context: ./tvgo
-      args:
-        CI_JOB_LOGIN: ${CI_JOB_LOGIN}
-        CI_JOB_TOKEN: ${CI_JOB_TOKEN}
+      # args:
+      #   CI_JOB_LOGIN: ${CI_JOB_LOGIN}
+      #   CI_JOB_TOKEN: ${CI_JOB_TOKEN}
     ports:
       - "8083:8083"
     depends_on:
