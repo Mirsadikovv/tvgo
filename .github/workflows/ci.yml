@@ -19,7 +19,7 @@ jobs:
       - name: Build and deploy services
         env:
           # CI_JOB_LOGIN: x
-          # CI_JOB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          # CI_JOB_TOKEN: ${{ secrets.PAT_TOKEN }} 
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
