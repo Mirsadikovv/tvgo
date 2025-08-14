@@ -8,8 +8,12 @@ import (
 	_ "github.com/Mirsadikovv/tvgo/docs"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
+	fileHandler "github.com/Mirsadikovv/tvgo/file_service/handler"
+	fileModel "github.com/Mirsadikovv/tvgo/file_service/model"
+	fileService "github.com/Mirsadikovv/tvgo/file_service/service"
 	userHandler "github.com/Mirsadikovv/tvgo/user/handler"
 	userModel "github.com/Mirsadikovv/tvgo/user/model"
+
 	userService "github.com/Mirsadikovv/tvgo/user/service"
 	"gorm.io/gorm"
 
@@ -28,7 +32,6 @@ import (
 func Exec() {
 
 	projectEnv := loader.ProjectEnv()
-	log.Println(os.Getenv("POSTGRES_PASSWORD"), "-----------------------")
 	pgConfig := pg.NewConfigEmpty()
 	{
 		pgConfig.SetHost(projectEnv.PgHost).
@@ -47,6 +50,7 @@ func Exec() {
 		db.AutoMigrate(
 			userModel.UserModel{},
 			playlistModel.PlaylistModel{},
+			fileModel.FileModel{},
 		)
 	}
 
@@ -80,6 +84,7 @@ func createHandler(router *echo.Echo, db *gorm.DB) {
 
 		userHandler.NewHandler(group, userService.NewService(db))
 		playlistHandler.NewHandler(group, playlistService.NewService(db))
+		fileHandler.NewHandler(group, fileService.NewService(db))
 		genadiHandler.NewHandler(group)
 	}
 }
