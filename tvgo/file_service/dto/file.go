@@ -12,7 +12,7 @@ import (
 type PageFileResponseType = response.PaginateResponse[*model.FileModel] // @name PageFileResponseType
 
 type CreateFileDto struct {
-	FileHeader *multipart.FileHeader `form:"file"`
+	FileHeader *multipart.FileHeader `form:"file" swaggerignore:"true"`
 	Category   string                `form:"category"`
 	Owner      string                `form:"owner"`
 	Sign       string                `form:"sign"`
@@ -26,7 +26,7 @@ type UpdateFileDto struct {
 } // @name UpdateFileDto
 
 type ReplaceFileDto struct {
-	FileHeader *multipart.FileHeader `form:"file"`
+	FileHeader *multipart.FileHeader `form:"file" swaggerignore:"true"`
 } // @name ReplaceFileDto
 
 type FileQueryParams struct {

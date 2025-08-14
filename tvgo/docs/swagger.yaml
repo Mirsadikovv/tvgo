@@ -55,6 +55,17 @@ definitions:
       id:
         type: integer
     type: object
+  UpdateFileDto:
+    properties:
+      category:
+        type: string
+      isVisible:
+        type: boolean
+      owner:
+        type: string
+      sign:
+        type: string
+    type: object
   UpdatePlaylistDto:
     properties:
       channelLink:
@@ -85,6 +96,31 @@ definitions:
       telegramId:
         type: integer
       username:
+        type: string
+    type: object
+  model.FileModel:
+    properties:
+      category:
+        type: string
+      createdAt:
+        type: string
+      dirName:
+        type: string
+      filename:
+        type: string
+      id:
+        type: integer
+      isVisible:
+        type: boolean
+      mimeType:
+        type: string
+      owner:
+        type: string
+      sign:
+        type: string
+      size:
+        type: integer
+      updatedAt:
         type: string
     type: object
   model.PlaylistModel:
@@ -139,6 +175,387 @@ info:
   title: TVGO API Server
   version: "1.0"
 paths:
+  /file:
+    post:
+      consumes:
+      - application/json
+      description: Create file
+      operationId: create-file
+      parameters:
+      - in: formData
+        name: category
+        type: string
+      - in: formData
+        name: owner
+        type: string
+      - in: formData
+        name: sign
+        type: string
+      - description: File Document
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new file
+      tags:
+      - file
+  /file/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete file by ID
+      operationId: delete-file
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Delete file
+      tags:
+      - file
+    get:
+      consumes:
+      - application/json
+      description: Get file by ID
+      operationId: get-file-by-id
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/model.FileModel'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get file by ID
+      tags:
+      - file
+    patch:
+      consumes:
+      - application/json
+      description: Update file information by ID
+      operationId: update-file
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: file information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateFileDto'
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update file information
+      tags:
+      - file
+    put:
+      consumes:
+      - application/json
+      description: Change file visibility by ID
+      operationId: change-visibility-file
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Change file visibility
+      tags:
+      - file
+  /file/{id}/replace:
+    patch:
+      consumes:
+      - application/json
+      description: Replace file by ID
+      operationId: replace-file
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: File Document
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Replace file
+      tags:
+      - file
+  /file/download/{category}/{owner}:
+    get:
+      consumes:
+      - application/json
+      description: Download file by category and owner
+      operationId: download-file-by-owner
+      parameters:
+      - description: category
+        in: path
+        name: category
+        required: true
+        type: string
+      - description: owner
+        in: path
+        name: owner
+        required: true
+        type: string
+      - description: sign
+        in: query
+        name: sign
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Download file by owner
+      tags:
+      - file
+  /file/download/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Download file by ID
+      operationId: download-file-by-id
+      parameters:
+      - description: file ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Download file by ID
+      tags:
+      - file
+  /file/page:
+    get:
+      consumes:
+      - application/json
+      description: Get all files with pagination
+      operationId: get-all-files
+      parameters:
+      - default: "1"
+        description: Page number
+        in: query
+        name: page
+        type: string
+      - default: "10"
+        description: Number of items per page
+        in: query
+        name: perpage
+        type: string
+      - in: query
+        name: category
+        type: string
+      - in: query
+        name: owner
+        type: string
+      - in: query
+        name: sign
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get all files with pagination
+      tags:
+      - file
+  /file/search:
+    get:
+      consumes:
+      - application/json
+      description: Search all files
+      operationId: search-all-files
+      parameters:
+      - in: query
+        name: category
+        type: string
+      - in: query
+        name: owner
+        type: string
+      - in: query
+        name: sign
+        type: string
+      - default: 20
+        description: Limit the number of results
+        in: query
+        name: limit
+        type: integer
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ID'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Search all files
+      tags:
+      - file
   /genadi:
     post:
       consumes:
@@ -183,6 +600,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/CreatePlaylistDto'
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -213,6 +635,11 @@ paths:
         name: id
         required: true
         type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       responses:
         "204":
           description: Successful operation
@@ -237,6 +664,10 @@ paths:
         in: path
         name: id
         required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
         type: string
       produces:
       - application/json
@@ -273,6 +704,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/UpdatePlaylistDto'
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       responses:
         "204":
           description: Successful operation
@@ -296,6 +732,11 @@ paths:
       - description: playlist ID
         in: path
         name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
         required: true
         type: string
       responses:
@@ -346,6 +787,10 @@ paths:
         - VIP
         - SPORT
         - FREE
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        type: string
       produces:
       - application/json
       responses:
@@ -393,6 +838,11 @@ paths:
         in: query
         name: limit
         type: integer
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -424,6 +874,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/CreateUserDto'
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -454,6 +909,11 @@ paths:
         name: id
         required: true
         type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       responses:
         "204":
           description: Successful operation
@@ -477,6 +937,11 @@ paths:
       - description: user ID
         in: path
         name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
         required: true
         type: string
       produces:
@@ -514,6 +979,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/UpdateUserDto'
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       responses:
         "204":
           description: Successful operation
@@ -537,6 +1007,11 @@ paths:
       - description: user ID
         in: path
         name: id
+        required: true
+        type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
         required: true
         type: string
       responses:
@@ -574,6 +1049,11 @@ paths:
         in: query
         name: search
         type: string
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -608,6 +1088,11 @@ paths:
         in: query
         name: limit
         type: integer
+      - description: API Key for authentication
+        in: header
+        name: X-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
